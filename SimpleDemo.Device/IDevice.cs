@@ -106,7 +106,7 @@ namespace SimpleDemo.Device
     /// 获取数据方法可重写，默认使用common获取
     /// </summary>
     /// <typeparam name="TConfig">配置文件</typeparam>
-    public abstract class IDeviceLightBase<TConfig> : IDeviceBase where TConfig : DeviceConfig
+    public abstract class IDeviceLightBase<TConfig> : IDeviceBase where TConfig :  DeviceConfig
     {
 
         public TConfig config { get; set; }
@@ -125,7 +125,8 @@ namespace SimpleDemo.Device
 
         public virtual bool GetIsOnLine()
         {
-            return LightOperationHelper.GetIsOnLine();
+            TConfig query = default(TConfig);
+            return LightOperationHelper.GetIsOnLine(); 
         }
 
         /// <summary>
@@ -153,6 +154,10 @@ namespace SimpleDemo.Device
         {
             return LightOperationHelper.GetRightLight();
         }
+
+
+
+
     }
     
 

@@ -40,6 +40,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.2.0.37222, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.2.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
@@ -56,13 +64,23 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.10\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.2.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -92,17 +110,24 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service References\DemoWCF\Reference.cs">
+    <Compile Include="MySQLConn.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>MySQLConn.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Service References\WebAPI\Reference.cs">
+    <Compile Include="MySQLConn.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
+      <DependentUpon>MySQLConn.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\demoTest.cs" />
+    <Compile Include="MySQLConn.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MySQLConn.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="tab1.cs">
+      <DependentUpon>MySQLConn.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MainView.xaml.cs">
@@ -123,54 +148,32 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\WebAPI\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\WebAPI\configuration.svcinfo" />
-    <None Include="Service References\WebAPI\configuration91.svcinfo" />
-    <None Include="Service References\WebAPI\Service1.disco" />
-    <None Include="Service References\DemoWCF\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\DemoWCF\configuration.svcinfo" />
-    <None Include="Service References\DemoWCF\configuration91.svcinfo" />
-    <None Include="Service References\DemoWCF\Service1.disco" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Service References\DemoWCF\Service1.wsdl" />
-    <None Include="Service References\DemoWCF\Service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DemoWCF\Service11.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DemoWCF\Service12.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DemoWCF\SimpleDemo.DemoWCF.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WebAPI\Service1.wsdl" />
-    <None Include="Service References\WebAPI\SimpleDemo.WebAPI.HelloWorldResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WebAPI\SimpleDemo.WebAPI.init1Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WebAPI\SimpleDemo.WebAPI.initResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WebAPI\SimpleDemo.WebAPI.sqsqResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <Resource Include="Img\car.png" />
+    <Content Include="MySQLConn.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MySQLConn.edmx</DependentUpon>
+      <LastGenOutput>MySQLConn.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MySQLConn.edmx.sql" />
+    <Content Include="MySQLConn.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MySQLConn.edmx</DependentUpon>
+      <LastGenOutput>MySQLConn.cs</LastGenOutput>
+    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EntityDeploy Include="MySQLConn.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MySQLConn.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MySQLConn.edmx.diagram">
+      <DependentUpon>MySQLConn.edmx</DependentUpon>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -204,8 +207,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\DemoWCF\" />
-    <WCFMetadataStorage Include="Service References\WebAPI\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

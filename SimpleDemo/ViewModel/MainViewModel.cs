@@ -33,45 +33,15 @@ namespace SimpleDemo.ViewModel
                 Set(ref _welcomeTitle, value);
             }
         }
-
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        //public MainViewModel(IDataService dataService)
-        //{
-        //    _dataService = dataService;
-        //    _dataService.GetData(
-        //        (item, error) =>
-        //        {
-        //            if (error != null)
-        //            {
-        //                // Report error here
-        //                return;
-        //            }
-
-        //            WelcomeTitle = item.Title;
-        //        });
-        //}
-
-        ////public override void Cleanup()
-        ////{
-        ////    // Clean up if needed
-
-        ////    base.Cleanup();
-        ////}
+        
 
         public MainViewModel()
         {
-            using (var dc = new DemoWCF.Service1Client())
+            using (var db = new SimpleDemo.TestEntities())
             {
-                var a = dc.GetData(2);
+                db.tab1.Add(new tab1() { name = "234234" });
+                db.SaveChanges();
             }
-
-            using (var api = new WebAPI.Service1SoapClient())
-            {
-                var asaaa = api.init("asdaaa");
-            }
-
         }
 
     }

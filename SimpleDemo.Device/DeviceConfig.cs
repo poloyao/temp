@@ -22,7 +22,6 @@ namespace SimpleDemo.Device
 
         public abstract DeviceType? DeviceType { get; set; }
 
-
         public abstract string DeviceFctory { get; set; }
     }
 

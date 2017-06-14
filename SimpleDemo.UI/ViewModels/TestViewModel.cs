@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Threading.Tasks;
 using DevExpress.Mvvm.POCO;
+using System.Threading;
 
 namespace SimpleDemo.UI.ViewModels
 {
@@ -33,10 +34,11 @@ namespace SimpleDemo.UI.ViewModels
             if(port.IsOpen)
             {
                 port.Close();
-            }            
+            }
+            cts.Cancel();
         }
 
-
+        CancellationTokenSource cts = new CancellationTokenSource();
 
         public void PhotoelectricInit()
         {
@@ -45,12 +47,22 @@ namespace SimpleDemo.UI.ViewModels
             {
                 port.Open();
             }
+            cts = new CancellationTokenSource();
+            var ct = cts.Token;
+            var testPort = port.BytesToRead;
+            if (testPort == 0)
+            {
+                //无返回数据，未通
+                return;
+            }
+            
 
-            Task task = new TaskFactory().StartNew(() =>
+            Task task = new TaskFactory(ct).StartNew(() =>
             {
                 while (port.IsOpen)
                 {
-                    InPhotoelectric = tempPhotoelctric;                    
+                    InPhotoelectric = tempPhotoelctric;
+                    ct.ThrowIfCancellationRequested();
                 }
 
                 InPhotoelectric = 3;

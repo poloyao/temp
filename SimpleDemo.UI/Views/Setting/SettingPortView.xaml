@@ -4,16 +4,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:SimpleDemo.UI.ViewModels"
-             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" x:Class="SimpleDemo.UI.Views.SettingPortView"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid" x:Class="SimpleDemo.UI.Views.SettingPortView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:SettingPortViewModel}}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="500">
+    <UserControl.Resources>
+        <DataTemplate x:Key="PropertyDetailTemplate">
+            <dxprg:PropertyGridControl SelectedObject="{Binding EditableObject, Converter={dxprg:EditableObjectConverter}}"
+                                       IsEnabled="{Binding IsEnabled}"
+                ShowCategories="False"
+                ShowSearchBox="False"
+                ShowToolPanel="False"
+                ShowMenuButtonInRows="False"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ShowProperties="WithPropertyDefinitions"
+                BorderThickness="0">
+                <dxprg:PropertyDefinition Path="PortName" Header="串口名称"  />
+                <dxprg:PropertyDefinition Path="BaudRate"  Header="波特率"  />
+                <dxprg:PropertyDefinition Path="DataBits" Header="数据位"  />
+                <dxprg:PropertyDefinition Path="Parity" Header="奇偶校验"  />
+                <dxprg:PropertyDefinition Path="StopBits" Header="停止位"  />
+            </dxprg:PropertyGridControl>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <dxlc:DataLayoutControl  CurrentItem="{Binding LightSettingItem}"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>-->
+        <!--<dxlc:DataLayoutControl Grid.Row="0" CurrentItem="{Binding LightSettingItem}" AutoGenerateItems="False">
+            <dxlc:DataLayoutItem Binding="{Binding LatticeScreen}" />
+            <dxlc:DataLayoutItem Binding="{Binding LightDevice}"/>
+        </dxlc:DataLayoutControl>-->
+
+        <dxprg:PropertyGridControl SelectedObject="{Binding LightSettingItem}" 
+                                   ShowCategories="True"
+                                    ExpandCategoriesWhenSelectedObjectChanged="True"
+                                    ShowMenuButtonInRows="False">
+            <dxprg:PropertyDefinition  Path="LatticeScreen"  ShowChildren="False" ContentTemplate="{DynamicResource PropertyDetailTemplate}" />
+            <dxprg:PropertyDefinition Path="LightDevice" ShowChildren="False" ContentTemplate="{DynamicResource PropertyDetailTemplate}" />
+            <dxprg:PropertyDefinition Path="Photoelectric"  ShowChildren="False" ContentTemplate="{DynamicResource PropertyDetailTemplate}" />
+            <dxprg:PropertyDefinition Path="" />
+
+        </dxprg:PropertyGridControl>
+
+        <!--<dxprg:PropertyGridControl ExpandCategoriesWhenSelectedObjectChanged="True"   SelectedObject="{Binding LightSettingItem}" ShowCategories="True" />-->
 
     </Grid>
 </UserControl>

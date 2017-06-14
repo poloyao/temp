@@ -83,7 +83,7 @@ namespace SimpleDemo.Model
     public class PortElement
     {
         [Display(Name = "端口")]
-        public string PortName { get; set; }
+        public PortIndex PortName { get; set; }
         [Display(Name = "波特率")]
         public int BaudRate { get; set; }
         [Display(Name = "数据位")]
@@ -101,27 +101,28 @@ namespace SimpleDemo.Model
     [MetadataType(typeof(LightSettingLayoutMetadata))]
     public class LightSetting
     {
+        const string GName = "大灯";
         /// <summary>
         /// 灯屏
         /// </summary>
-        [Display(Name = "灯屏")]
-        public PortElement LatticeScreen { get; set; } = new PortElement();
+        [Display(Name = "灯屏",GroupName = GName)]
+        public SerialPort  LatticeScreen { get; set; } = new SerialPort();
         /// <summary>
         /// 大灯
         /// </summary>
-        [Display(Name = "大灯")]
+        [Display(Name = "大灯", GroupName = GName)]
         public PortElement LightDevice { get; set; } = new PortElement();
 
         /// <summary>
         /// 光电
         /// </summary>
-        [Display(Name = "光电")]
-        public PortElement Photoelectric { get; set; }
+        [Display(Name = "光电", GroupName = GName)]
+        public PortElement Photoelectric { get; set; } = new PortElement();
 
         /// <summary>
         /// 协议类型
         /// </summary>
-        [Display(Name = "协议类型")]
+        [Display(Name = "协议类型", GroupName = GName)]
         public string ProtocolType { get; set; }
         
         
@@ -138,6 +139,9 @@ namespace SimpleDemo.Model
                 .ContainsProperty(x => x.LightDevice)
                 .ContainsProperty(x => x.Photoelectric)
                 .ContainsProperty(x => x.ProtocolType);
+            
+
+
 
 
         }

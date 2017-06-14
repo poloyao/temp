@@ -32,7 +32,7 @@ namespace SimpleDemo.Common
                 case DetectionType.Speed:
                     break;
                 case DetectionType.Light:
-                    port.PortName = config.GetLightSetting().Photoelectric.ToString();
+                    port.PortName = config.GetLightSetting().Photoelectric.PortName.ToString();
                    // port.
                     break;
                 case DetectionType.Brake:

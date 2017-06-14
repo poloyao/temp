@@ -25,6 +25,7 @@ namespace SimpleDemo.UI.ViewModels
             port.BaudRate = 9600;
             port.DataBits = 8;
             port.Parity = Parity.None;
+            port.StopBits = StopBits.One;
         }
 
         public void Close()

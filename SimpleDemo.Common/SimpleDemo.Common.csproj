@@ -42,9 +42,17 @@
   <ItemGroup>
     <Compile Include="Device\LightOperationHelper.cs" />
     <Compile Include="Device\ProfileOperationHelper.cs" />
+    <Compile Include="GlobalConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Device\SpeedOPerationHelper.cs" />
     <Compile Include="Device\WeightOperationHelper.cs" />
+    <Compile Include="SerialPortHelp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleDemo.Model\SimpleDemo.Model.csproj">
+      <Project>{9CA61B5D-6C00-4CC5-8C19-23458706B990}</Project>
+      <Name>SimpleDemo.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

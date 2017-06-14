@@ -168,13 +168,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleDemo.Common\SimpleDemo.Common.csproj">
+      <Project>{5BF7DB2E-798B-425E-8BC1-2A9502CB1623}</Project>
+      <Name>SimpleDemo.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleDemo.Model\SimpleDemo.Model.csproj">
       <Project>{9CA61B5D-6C00-4CC5-8C19-23458706B990}</Project>
       <Name>SimpleDemo.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimpleDemo\SimpleDemo.csproj">
-      <Project>{d2ebd84e-fd33-47ae-ad65-2d978580e00d}</Project>
-      <Name>SimpleDemo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

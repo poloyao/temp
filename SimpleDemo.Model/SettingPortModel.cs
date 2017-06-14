@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.IO.Ports;
 
 namespace SimpleDemo.Model
 {
@@ -77,8 +78,20 @@ namespace SimpleDemo.Model
         /// 协议模式，例如显示厂家名
         /// </summary>
         ProtocolType
+    }
 
-
+    public class PortElement
+    {
+        [Display(Name = "端口")]
+        public string PortName { get; set; }
+        [Display(Name = "波特率")]
+        public int BaudRate { get; set; }
+        [Display(Name = "数据位")]
+        public int DataBits { get; set; }
+        [Display(Name = "奇偶校验")]
+        public Parity Parity { get; set; }
+        [Display(Name = "停止位")]
+        public StopBits StopBits { get; set; }
     }
 
 
@@ -92,24 +105,27 @@ namespace SimpleDemo.Model
         /// 灯屏
         /// </summary>
         [Display(Name = "灯屏")]
-        public PortIndex LatticeScreen { get; set; }
+        public PortElement LatticeScreen { get; set; } = new PortElement();
         /// <summary>
         /// 大灯
         /// </summary>
         [Display(Name = "大灯")]
-        public PortIndex LightDevice { get; set; }
+        public PortElement LightDevice { get; set; } = new PortElement();
 
         /// <summary>
         /// 光电
         /// </summary>
         [Display(Name = "光电")]
-        public PortIndex Photoelectric { get; set; }
+        public PortElement Photoelectric { get; set; }
 
         /// <summary>
         /// 协议类型
         /// </summary>
         [Display(Name = "协议类型")]
         public string ProtocolType { get; set; }
+        
+        
+
     }
 
     public static class LightSettingLayoutMetadata
@@ -122,7 +138,8 @@ namespace SimpleDemo.Model
                 .ContainsProperty(x => x.LightDevice)
                 .ContainsProperty(x => x.Photoelectric)
                 .ContainsProperty(x => x.ProtocolType);
-                              
+
+
         }
     }
 

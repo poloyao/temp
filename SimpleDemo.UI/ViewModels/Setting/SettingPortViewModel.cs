@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using SimpleDemo.Model;
+using SimpleDemo.Common;
 
 namespace SimpleDemo.UI.ViewModels
 {
@@ -9,7 +10,14 @@ namespace SimpleDemo.UI.ViewModels
     public class SettingPortViewModel
     {
 
-        public LightSetting LightSettingItem { get; set; } = new LightSetting();
+        public LightSetting LightSettingItem { get; set; }
+        
+
+        public SettingPortViewModel()
+        {
+            LightSettingItem = GlobalConfig.GetInstance().GetLightSetting();
+        }
+
     }
 
     

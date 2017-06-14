@@ -13,6 +13,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <dxlc:DataLayoutControl CurrentItem="{Binding LightSettingItem}"/>
+        <dxlc:DataLayoutControl  CurrentItem="{Binding LightSettingItem}"/>
+
     </Grid>
 </UserControl>

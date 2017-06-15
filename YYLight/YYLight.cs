@@ -15,6 +15,7 @@ namespace YYLight
         public bool InPhotoelectric { get; set; }
         public bool InLight { get; set; }
         public List<PortElement> PortItems { get; set; }
+        
 
         public void DeviceReset()
         {
@@ -87,6 +88,16 @@ namespace YYLight
         }
 
         public void SetLatticeScreen(string Message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCarBookInfo(string carBookInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DetectionStart()
         {
             throw new NotImplementedException();
         }

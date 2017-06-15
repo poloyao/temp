@@ -43,8 +43,15 @@ namespace SimpleDemo.Device
 
 
         #region 方法函数
-
-
+        /// <summary>
+        /// 传入车籍信息
+        /// </summary>
+        /// <param name="carBookInfo"></param>
+        void SetCarBookInfo(string carBookInfo);
+        /// <summary>
+        /// 开启检测
+        /// </summary>
+        void DetectionStart();
         /// <summary>
         /// 设置点阵提示内容
         /// </summary>

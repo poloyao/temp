@@ -1,4 +1,5 @@
-﻿using SimpleDemo.Model;
+﻿using SimpleDemo.Device;
+using SimpleDemo.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace SimpleDemo.Common
     {
 
         private static readonly GlobalConfig instance = new GlobalConfig();
+        
 
         public static GlobalConfig GetInstance()
         {
@@ -25,16 +27,39 @@ namespace SimpleDemo.Common
         }
 
         /// <summary>
-        /// 获取大灯设置参数的克隆
+        /// 根据泛型获取到动态加载的流程模块dll
         /// </summary>
+        /// <typeparam name="TFlow"></typeparam>
         /// <returns></returns>
-        public LightSetting GetLightSetting()
+        public TFlowModule GetDynamicModule<TFlowModule>() where TFlowModule : CoreFlowBase
         {
-            var result = new LightSetting();
-            //result.LatticeScreen = PortIndex.COM8;
-            //result.LightDevice = PortIndex.COM16;
-            return result;
+            TFlowModule module = default(TFlowModule);
+
+            if (module is LightFlowBase)
+                return null;
+
+            return module;
         }
+
+
+        ///// <summary>
+        ///// 获取大灯设置参数的克隆
+        ///// </summary>
+        ///// <returns></returns>
+        //public LightSetting GetLightSetting()
+        //{
+        //    var result = new LightSetting();
+        //    return result;
+        //}
+
+        //internal SettingBase GetXXSetting()
+        //{
+        //    var result = new LightSetting();
+        //    result.LatticeScreen.PortName = "COM2";
+        //    result.XX = "xx";
+        //    return result;
+        //}
+
 
     }
 }

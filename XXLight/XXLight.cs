@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
+using SimpleDemo.Common;
+using SimpleDemo.Model;
+using System.Threading;
 
 namespace XXLight
 {
@@ -15,14 +18,22 @@ namespace XXLight
     {
         public override string DeviceModel => "XKKSL";
 
-        public override DeviceType? DeviceType => SimpleDemo.Device.DeviceType.Device4;
+        public override DeviceType DeviceType => DeviceType.LightDevice;
 
         public override string DeviceName => "XX型号的灯光设备";
+
+        
+        int tempPhotoelctric;
 
         /// <summary>
         /// 光电到位
         /// </summary>
-        public bool InPhotoelectric { get; set; }
+        public  int InPhotoelectric { get; set; }
+
+        public XXLight()
+        {
+
+        }
 
 
         #region 重写
@@ -59,25 +70,20 @@ namespace XXLight
             return true;
         }
 
+        /// <summary>
+        /// 光电初始化
+        /// </summary>
         public void PhotoelectricInit()
         {
-            SerialPort port = new SerialPort();
-            port.PortName = "COM1";
-            port.BaudRate = 9600;
-            port.DataBits = 8;
-            port.Parity = Parity.None;
-            port.StopBits = StopBits.None;
-
+            var port = SerialPortHelp.GetDevicePort(DeviceType.Photoelectric, DetectionType.Light);
             port.DataReceived += Photoelectric_DataReceived;
-
             if (!port.IsOpen)
-            {
                 port.Open();
-            }
+            
         }
 
         /// <summary>
-        /// 光电到位接受事件
+        /// 光电到位接收事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -115,9 +121,8 @@ namespace XXLight
                 if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
                 {
                     result = bytesData[i + 1];
-
-                    InPhotoelectric = result > 0x00 ? true : false;
-
+                    //tempPhotoelctric = result > 0x00 ? 2 : 0;
+                    InPhotoelectric = result > 0x00 ? 2 : 0;
                     i += 2;
                 }
 
@@ -154,38 +159,38 @@ namespace XXLight
 
         public void Start()
         {
-            if (InPhotoelectric)
-            {
-                if(GetLightSource())
-                {
-                    while (true)
-                    {
-                        var temp = GetLightData();
-                        //模拟计算过程
-                        if (1+1==0)
-                        {
-                            break;
-                        }
-                        else//错误
-                        {
-                            //判断是否是双灯同检
-                            if (true)
-                            {
+            //if (InPhotoelectric)
+            //{
+            //    if(GetLightSource())
+            //    {
+            //        while (true)
+            //        {
+            //            var temp = GetLightData();
+            //            //模拟计算过程
+            //            if (1+1==0)
+            //            {
+            //                break;
+            //            }
+            //            else//错误
+            //            {
+            //                //判断是否是双灯同检
+            //                if (true)
+            //                {
 
-                            }
-                            else
-                            {
-                                LatticeScreenDisplay("检测失败");
-                            }
-                        }
-                    }
-                }
+            //                }
+            //                else
+            //                {
+            //                    LatticeScreenDisplay("检测失败");
+            //                }
+            //            }
+            //        }
+            //    }
 
-            }
-            else
-            {
-                LatticeScreenDisplay("车辆未到位");
-            }
+            //}
+            //else
+            //{
+            //    LatticeScreenDisplay("车辆未到位");
+            //}
         }
 
 
@@ -274,6 +279,116 @@ namespace XXLight
             }
         }
     }
-    
+
+
+
+    public class YYLight : LightFlowBase
+    {
+        /// <summary>
+        /// 光电是否到位
+        /// </summary>
+        public override bool InPhotoelectric { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public override bool InLight { get; set; }
+
+        /// <summary>
+        /// 大灯检测流程设备串口列表
+        /// </summary>
+        public override List<PortElement> PortItems { get; set; }
+
+        public override void DeviceReset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void GetLightData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void LightClose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void LightOpen()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void PhotoelectricOpen()
+        {
+            var port = SerialPortHelp.GetDevicePort(DeviceType.Photoelectric, DetectionType.Light);
+            port.DataReceived += Photoelectric_DataReceived;
+            if (!port.IsOpen)
+                port.Open();
+        }
+
+        /// <summary>
+        /// 光电到位接收事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Photoelectric_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var serialPort = sender as SerialPort;
+            byte[] bytesData = new byte[0];
+            byte[] bytesTemp = new byte[0];
+            int bytesRead;
+            byte result = 0x00;
+
+            //获取接收缓冲区中字节数
+            bytesRead = serialPort.BytesToRead;
+            //保存上一次没处理完的数据
+            if (bytesData.Length > 0)
+            {
+                bytesTemp = new byte[bytesData.Length];
+                bytesData.CopyTo(bytesTemp, 0);
+                bytesData = new byte[bytesRead + bytesData.Length];
+                bytesTemp.CopyTo(bytesData, 0);
+            }
+            else
+            {
+                bytesData = new byte[bytesRead];
+                bytesTemp = new byte[0];
+            }
+            //保存本次接收的数据
+            for (int i = 0; i < bytesRead; i++)
+            {
+                bytesData[bytesTemp.Length + i] = Convert.ToByte(serialPort.ReadByte());//read all data
+            }
+
+            for (int i = 0; i < bytesData.Length; i++)
+            {
+                if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
+                {
+                    result = bytesData[i + 1];
+                    InPhotoelectric = result > 0x00 ? true : false;
+                    i += 2;
+                }
+
+            }
+        }
+
+
+        public override void SetLatticeScreen(string Message)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class iiisjj
+    {
+        public TBase GetClass<TBase>() where TBase : CoreFlowBase
+        {
+            TBase t = default(TBase);
+            return t;
+        }
+    }
+
+
 }
 

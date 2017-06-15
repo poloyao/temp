@@ -7,7 +7,7 @@
              xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges" x:Class="SimpleDemo.UI.Views.TestView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:TestViewModel}}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="400">
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:DispatcherService/>
     </dxmvvm:Interaction.Behaviors>
@@ -30,6 +30,7 @@
             </FlowDocument>
         </RichTextBox>
         <Button x:Name="button_Copy" Command="{Binding CloseCommand}" Content="Button" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+        <Button  Command="{Binding TestSettingCommand}" Content="Button" HorizontalAlignment="Left" Margin="225,21,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
 
 
     </Grid>

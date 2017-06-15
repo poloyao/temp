@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using SimpleDemo.Model;
 using SimpleDemo.Common;
+using System.Collections.Generic;
 
 namespace SimpleDemo.UI.ViewModels
 {
@@ -10,15 +11,23 @@ namespace SimpleDemo.UI.ViewModels
     public class SettingPortViewModel
     {
 
-        public LightSetting LightSettingItem { get; set; }
-        
+        //public LightSetting LightSettingItem { get; set; }
+
+        //public PortElement Items { get; set; } = new PortElement();
+
+        public List<PortElement> Items { get; set; } = new List<PortElement>();
 
         public SettingPortViewModel()
         {
-            LightSettingItem = GlobalConfig.GetInstance().GetLightSetting();
+            //LightSettingItem = GlobalConfig.GetInstance().GetLightSetting();
         }
 
+       
+
     }
+
+
+
 
     
 

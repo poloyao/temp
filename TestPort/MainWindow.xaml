@@ -24,7 +24,7 @@
                     <dxdo:LayoutPanel Caption="Panel2"/>
                 </dxdo:LayoutGroup>
                 <dxdo:LayoutPanel Caption="Panel3">
-                    <dxprg:PropertyGridControl  SelectedObject="{Binding Data[1]}" >
+                    <dxprg:PropertyGridControl  SelectedObject="{Binding Data[1]}" ShowSearchBox="False" ShowCategories="True" >
                     </dxprg:PropertyGridControl>
                 </dxdo:LayoutPanel>
             </dxdo:LayoutGroup>

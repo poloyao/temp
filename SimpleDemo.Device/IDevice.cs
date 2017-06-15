@@ -1,4 +1,4 @@
-﻿using SimpleDemo.Common;
+﻿using SimpleDemo.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace SimpleDemo.Device
     {
         string DeviceName { get; }
         string IPAddress { get; set; }
-        DeviceType? DeviceType { get; }
+        DeviceType DeviceType { get; }
         string DeviceModel { get; }
         string DeviceFctory { get; set; }
         bool IsOnline { get; }
@@ -38,7 +38,7 @@ namespace SimpleDemo.Device
         /// <summary>
         /// 设备类型
         /// </summary>
-        public abstract DeviceType? DeviceType { get;}
+        public abstract DeviceType DeviceType { get;}
 
         /// <summary>
         /// 设备型号
@@ -62,25 +62,25 @@ namespace SimpleDemo.Device
     /// <summary>
     /// 设备类型枚举
     /// </summary>
-    public enum DeviceType
-    {
-        /// <summary>
-        /// 测速
-        /// </summary>
-        Device1,
-        /// <summary>
-        /// 测重
-        /// </summary>
-        Device2,
-        /// <summary>
-        /// 外廓
-        /// </summary>
-        Device3,
-        /// <summary>
-        /// 灯光
-        /// </summary>
-        Device4
-    }
+    //public enum DeviceType
+    //{
+    //    /// <summary>
+    //    /// 测速
+    //    /// </summary>
+    //    Device1,
+    //    /// <summary>
+    //    /// 测重
+    //    /// </summary>
+    //    Device2,
+    //    /// <summary>
+    //    /// 外廓
+    //    /// </summary>
+    //    Device3,
+    //    /// <summary>
+    //    /// 灯光
+    //    /// </summary>
+    //    Device4
+    //}
     /// <summary>
     /// 测速基类
     /// </summary>
@@ -126,7 +126,7 @@ namespace SimpleDemo.Device
         public virtual bool GetIsOnLine()
         {
             TConfig query = default(TConfig);
-            return LightOperationHelper.GetIsOnLine(); 
+            return true;//LightOperationHelper.GetIsOnLine(); 
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace SimpleDemo.Device
         /// <returns></returns>
         public virtual bool GetCheckReuslut()
         {
-            return LightOperationHelper.GetCheckReuslut();
+            return true;//LightOperationHelper.GetCheckReuslut();
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace SimpleDemo.Device
         /// <returns></returns>
         public virtual string GetLeftLight()
         {
-            return LightOperationHelper.GetLeftLight();
+            return "";//LightOperationHelper.GetLeftLight();
         }
         /// <summary>
         /// 获取右侧灯光信息
@@ -152,7 +152,7 @@ namespace SimpleDemo.Device
         /// <returns></returns>
         public virtual string GetRightLight()
         {
-            return LightOperationHelper.GetRightLight();
+            return "";//LightOperationHelper.GetRightLight();
         }
 
 

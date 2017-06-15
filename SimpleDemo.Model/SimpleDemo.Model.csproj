@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DetectionType.cs" />
+    <Compile Include="DeviceType.cs" />
     <Compile Include="LightDetectionMode.cs" />
     <Compile Include="PortIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

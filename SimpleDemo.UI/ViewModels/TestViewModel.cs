@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DevExpress.Mvvm.POCO;
 using System.Threading;
+using SimpleDemo.Model;
+using XXLight;
 
 namespace SimpleDemo.UI.ViewModels
 {
@@ -22,11 +24,11 @@ namespace SimpleDemo.UI.ViewModels
 
         public TestViewModel()
         {
-            port.PortName = "COM1";
-            port.BaudRate = 9600;
-            port.DataBits = 8;
-            port.Parity = Parity.None;
-            port.StopBits = StopBits.One;
+            //port.PortName = "COM1";
+            //port.BaudRate = 9600;
+            //port.DataBits = 8;
+            //port.Parity = Parity.None;
+            //port.StopBits = StopBits.One;
         }
 
         public void Close()
@@ -42,31 +44,21 @@ namespace SimpleDemo.UI.ViewModels
 
         public void PhotoelectricInit()
         {
-            port.DataReceived += Photoelectric_DataReceived;
-            if (!port.IsOpen)
+
+            var yy = new YYLight();
+            yy.PhotoelectricOpen();
+
+            Task task = new TaskFactory().StartNew(() =>
             {
-                port.Open();
-            }
-            cts = new CancellationTokenSource();
-            var ct = cts.Token;
-            var testPort = port.BytesToRead;
-            if (testPort == 0)
-            {
-                //无返回数据，未通
-                return;
-            }
+                while (true)
+                {
+                    InPhotoelectric = yy.InPhotoelectric == true ? 2 : 0;
+                }
+            });
+
             
 
-            Task task = new TaskFactory(ct).StartNew(() =>
-            {
-                while (port.IsOpen)
-                {
-                    InPhotoelectric = tempPhotoelctric;
-                    ct.ThrowIfCancellationRequested();
-                }
 
-                InPhotoelectric = 3;
-            });
         }
 
         private void Port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
@@ -132,6 +124,31 @@ namespace SimpleDemo.UI.ViewModels
             }
 
             
+        }
+
+
+        public void TestSetting()
+        {
+            //var op = Common.SerialPortHelp.GetDevicePort(DeviceType.LatticeScreen, DetectionType.Light);
+            //if (!op.IsOpen)
+            //    op.Open();
+
+            //var op2 = Common.SerialPortHelp.GetDevicePort(DeviceType.LatticeScreen, DetectionType.Light);
+            //if (!op.IsOpen)
+            //    op.Open();
+
+            var query = GetClass<Device.LightFlowBase>();
+            var query2 = Common.GlobalConfig.GetInstance().GetDynamicModule<Device.LightFlowBase>();
+
+        }
+
+        public TBase GetClass<TBase>() where TBase : Device.CoreFlowBase
+        {
+            //TBase t = default(TBase);
+            //return t;
+            YYLight sda = new YYLight();
+
+            return (TBase)((object)sda);
         }
     }
 }

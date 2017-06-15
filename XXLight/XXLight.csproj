@@ -44,9 +44,17 @@
     <Compile Include="XXLight.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleDemo.Common\SimpleDemo.Common.csproj">
+      <Project>{5BF7DB2E-798B-425E-8BC1-2A9502CB1623}</Project>
+      <Name>SimpleDemo.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleDemo.Device\SimpleDemo.Device.csproj">
       <Project>{106A018D-D0BC-4299-B941-EFAFBF9C444D}</Project>
       <Name>SimpleDemo.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleDemo.Model\SimpleDemo.Model.csproj">
+      <Project>{9CA61B5D-6C00-4CC5-8C19-23458706B990}</Project>
+      <Name>SimpleDemo.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

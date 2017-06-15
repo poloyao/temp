@@ -41,13 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceConfig.cs" />
+    <Compile Include="FlowBase.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleDemo.Common\SimpleDemo.Common.csproj">
-      <Project>{5BF7DB2E-798B-425E-8BC1-2A9502CB1623}</Project>
-      <Name>SimpleDemo.Common</Name>
+    <ProjectReference Include="..\SimpleDemo.Model\SimpleDemo.Model.csproj">
+      <Project>{9CA61B5D-6C00-4CC5-8C19-23458706B990}</Project>
+      <Name>SimpleDemo.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

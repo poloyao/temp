@@ -4,13 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:SimpleDemo.UI.ViewModels"
-             xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid" x:Class="SimpleDemo.UI.Views.SettingTimeView"
+             xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid" x:Class="SimpleDemo.UI.Views.SetDetectorView"
              mc:Ignorable="d"
-             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:SettingTimeViewModel}}"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:SetDetectorViewModel}}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <dxprg:PropertyGridControl SelectedObject="{Binding Items[0]}"  ShowCategories="True"
-                                   ShowMenuButtonInRows="False"
-                                    ExpandCategoriesWhenSelectedObjectChanged="False"/>
+        <dxprg:PropertyGridControl SelectedObject="{Binding items}"/>
     </Grid>
 </UserControl>

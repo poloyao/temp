@@ -282,98 +282,83 @@ namespace XXLight
 
 
 
-    public class YYLight : LightFlowBase
+    public class YYLight : ILightFlowBase
     {
-        /// <summary>
-        /// 光电是否到位
-        /// </summary>
-        public override bool InPhotoelectric { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public override bool InLight { get; set; }
+        public bool InPhotoelectric { get; set; }
+        public bool InLight { get; set; }
+        public List<PortElement> PortItems { get; set; }
 
-        /// <summary>
-        /// 大灯检测流程设备串口列表
-        /// </summary>
-        public override List<PortElement> PortItems { get; set; }
-
-        public override void DeviceReset()
+        public void DeviceReset()
         {
             throw new NotImplementedException();
         }
 
-        public override void GetLightData()
+        public void GetLightData()
         {
             throw new NotImplementedException();
         }
 
-        public override void LightClose()
+        public void LightClose()
         {
             throw new NotImplementedException();
         }
 
-        public override void LightOpen()
+        public void LightOpen()
         {
             throw new NotImplementedException();
         }
 
-        public override void PhotoelectricOpen()
+        public void PhotoelectricOpen()
         {
             var port = SerialPortHelp.GetDevicePort(DeviceType.Photoelectric, DetectionType.Light);
-            port.DataReceived += Photoelectric_DataReceived;
+
+            port.DataReceived += (s, e) =>
+            {
+                var serialPort = s as SerialPort;
+                byte[] bytesData = new byte[0];
+                byte[] bytesTemp = new byte[0];
+                int bytesRead;
+                byte result = 0x00;
+
+                //获取接收缓冲区中字节数
+                bytesRead = serialPort.BytesToRead;
+                //保存上一次没处理完的数据
+                if (bytesData.Length > 0)
+                {
+                    bytesTemp = new byte[bytesData.Length];
+                    bytesData.CopyTo(bytesTemp, 0);
+                    bytesData = new byte[bytesRead + bytesData.Length];
+                    bytesTemp.CopyTo(bytesData, 0);
+                }
+                else
+                {
+                    bytesData = new byte[bytesRead];
+                    bytesTemp = new byte[0];
+                }
+                //保存本次接收的数据
+                for (int i = 0; i < bytesRead; i++)
+                {
+                    bytesData[bytesTemp.Length + i] = Convert.ToByte(serialPort.ReadByte());//read all data
+                }
+
+                for (int i = 0; i < bytesData.Length; i++)
+                {
+                    if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
+                    {
+                        result = bytesData[i + 1];
+                        InPhotoelectric = result > 0x00 ? true : false;
+                        i += 2;
+                    }
+
+                }
+            };
+
+
             if (!port.IsOpen)
                 port.Open();
         }
 
-        /// <summary>
-        /// 光电到位接收事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Photoelectric_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            var serialPort = sender as SerialPort;
-            byte[] bytesData = new byte[0];
-            byte[] bytesTemp = new byte[0];
-            int bytesRead;
-            byte result = 0x00;
-
-            //获取接收缓冲区中字节数
-            bytesRead = serialPort.BytesToRead;
-            //保存上一次没处理完的数据
-            if (bytesData.Length > 0)
-            {
-                bytesTemp = new byte[bytesData.Length];
-                bytesData.CopyTo(bytesTemp, 0);
-                bytesData = new byte[bytesRead + bytesData.Length];
-                bytesTemp.CopyTo(bytesData, 0);
-            }
-            else
-            {
-                bytesData = new byte[bytesRead];
-                bytesTemp = new byte[0];
-            }
-            //保存本次接收的数据
-            for (int i = 0; i < bytesRead; i++)
-            {
-                bytesData[bytesTemp.Length + i] = Convert.ToByte(serialPort.ReadByte());//read all data
-            }
-
-            for (int i = 0; i < bytesData.Length; i++)
-            {
-                if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
-                {
-                    result = bytesData[i + 1];
-                    InPhotoelectric = result > 0x00 ? true : false;
-                    i += 2;
-                }
-
-            }
-        }
-
-
-        public override void SetLatticeScreen(string Message)
+        public void SetLatticeScreen(string Message)
         {
             throw new NotImplementedException();
         }
@@ -382,7 +367,7 @@ namespace XXLight
 
     public class iiisjj
     {
-        public TBase GetClass<TBase>() where TBase : CoreFlowBase
+        public TBase GetClass<TBase>() where TBase : ICoreFlowBase
         {
             TBase t = default(TBase);
             return t;

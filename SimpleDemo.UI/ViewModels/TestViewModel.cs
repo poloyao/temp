@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using DevExpress.Mvvm.POCO;
 using System.Threading;
 using SimpleDemo.Model;
-using XXLight;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using System.Configuration;
+using SimpleDemo.Device;
 
 namespace SimpleDemo.UI.ViewModels
 {
@@ -44,8 +47,14 @@ namespace SimpleDemo.UI.ViewModels
 
         public void PhotoelectricInit()
         {
+            IUnityContainer mycontainer = new UnityContainer();
 
-            var yy = new YYLight();
+            UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            section.Configure(mycontainer);
+
+            ILightFlowBase yy = mycontainer.Resolve<ILightFlowBase>();
+
+            //var yy = new YYLight();
             yy.PhotoelectricOpen();
 
             Task task = new TaskFactory().StartNew(() =>
@@ -137,18 +146,18 @@ namespace SimpleDemo.UI.ViewModels
             //if (!op.IsOpen)
             //    op.Open();
 
-            var query = GetClass<Device.LightFlowBase>();
-            var query2 = Common.GlobalConfig.GetInstance().GetDynamicModule<Device.LightFlowBase>();
+            //var query = GetClass<Device.LightFlowBase>();
+            //var query2 = Common.GlobalConfig.GetInstance().GetDynamicModule<Device.LightFlowBase>();
 
         }
 
-        public TBase GetClass<TBase>() where TBase : Device.CoreFlowBase
-        {
-            //TBase t = default(TBase);
-            //return t;
-            YYLight sda = new YYLight();
+        //public TBase GetClass<TBase>() where TBase : Device.CoreFlowBase
+        //{
+        //    //TBase t = default(TBase);
+        //    //return t;
+        //    YYLight sda = new YYLight();
 
-            return (TBase)((object)sda);
-        }
+        //    return (TBase)((object)sda);
+        //}
     }
 }

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F70BA358-58FF-42FC-AED2-B0C213CF971F}</ProjectGuid>
+    <ProjectGuid>{701ADDB7-5537-4813-80C2-B403837A6244}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YYLight</RootNamespace>
@@ -40,21 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YYLight.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleDemo\SimpleDemo.csproj">
-      <Project>{D2EBD84E-FD33-47AE-AD65-2D978580E00D}</Project>
-      <Name>SimpleDemo</Name>
+    <ProjectReference Include="..\SimpleDemo.Common\SimpleDemo.Common.csproj">
+      <Project>{5bf7db2e-798b-425e-8bc1-2a9502cb1623}</Project>
+      <Name>SimpleDemo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleDemo.Device\SimpleDemo.Device.csproj">
+      <Project>{106a018d-d0bc-4299-b941-efafbf9c444d}</Project>
+      <Name>SimpleDemo.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleDemo.Model\SimpleDemo.Model.csproj">
+      <Project>{9ca61b5d-6c00-4cc5-8c19-23458706b990}</Project>
+      <Name>SimpleDemo.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

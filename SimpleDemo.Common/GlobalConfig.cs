@@ -31,13 +31,10 @@ namespace SimpleDemo.Common
         /// </summary>
         /// <typeparam name="TFlow"></typeparam>
         /// <returns></returns>
-        public TFlowModule GetDynamicModule<TFlowModule>() where TFlowModule : CoreFlowBase
+        public TFlowModule GetDynamicModule<TFlowModule>() where TFlowModule : ICoreFlowBase
         {
             TFlowModule module = default(TFlowModule);
-
-            if (module is LightFlowBase)
-                return null;
-
+            
             return module;
         }
 

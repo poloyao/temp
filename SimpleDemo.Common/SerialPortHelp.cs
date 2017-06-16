@@ -106,6 +106,12 @@ namespace SimpleDemo.Common
             });
         }
 
+        /// <summary>
+        /// 断开指定串口
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="detection"></param>
+        /// <param name="index"></param>
         public static void ClosePort(DeviceType device, DetectionType detection, int index = 0)
         {
             try

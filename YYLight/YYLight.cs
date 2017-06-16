@@ -6,16 +6,30 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace YYLight
 {
     public class YYLight : ILightFlowBase
     {
-        public bool InPhotoelectric { get; set; }
+        public virtual bool InPhotoelectric { get; set; }
         public bool InLight { get; set; }
         public List<PortElement> PortItems { get; set; }
-        
+
+
+        public YYLight()
+        {
+            PortItems = new List<PortElement>();
+            PortItems.Add(SerialPortHelp.GetDevicePort(DeviceType.Photoelectric, DetectionType.Light));
+        }
+
+
+        public bool GetInPhot()
+        {
+            return InPhotoelectric;
+        }
+
 
         public void DeviceReset()
         {
@@ -40,7 +54,7 @@ namespace YYLight
         public void PhotoelectricOpen()
         {
             var port = SerialPortHelp.GetDevicePort(DeviceType.Photoelectric, DetectionType.Light);
-
+       
             port.DataReceived += (s, e) =>
             {
                 var serialPort = s as SerialPort;

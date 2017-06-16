@@ -203,6 +203,10 @@
       <Project>{9CA61B5D-6C00-4CC5-8C19-23458706B990}</Project>
       <Name>SimpleDemo.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\YYLight\YYLight.csproj">
+      <Project>{701addb7-5537-4813-80c2-b403837a6244}</Project>
+      <Name>YYLight</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\car.png" />

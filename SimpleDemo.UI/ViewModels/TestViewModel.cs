@@ -11,6 +11,9 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using System.Configuration;
 using SimpleDemo.Device;
+using System.Linq;
+using SimpleDemo.Common;
+using YYLight;
 
 namespace SimpleDemo.UI.ViewModels
 {
@@ -21,9 +24,14 @@ namespace SimpleDemo.UI.ViewModels
         protected IDispatcherService dispatcherService { get { return this.GetService<IDispatcherService>(); } }
         public virtual int InPhotoelectric { get; set; }
         public int tempPhotoelctric;
+
+
+        public virtual int TaskOnline { get; set; }
         
         public virtual string Data { get; set; }
-        SerialPort port = new SerialPort();
+        //SerialPort port = new SerialPort();
+
+        ILightFlowBase yy;
 
         public TestViewModel()
         {
@@ -32,14 +40,36 @@ namespace SimpleDemo.UI.ViewModels
             //port.DataBits = 8;
             //port.Parity = Parity.None;
             //port.StopBits = StopBits.One;
+
+            yy = new YYLight.YYLight();
+
+            //IUnityContainer mycontainer = new UnityContainer();
+
+            //UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            //section.Configure(mycontainer);
+
+            //yy = mycontainer.Resolve<ILightFlowBase>();
         }
 
         public void Close()
         {
-            if(port.IsOpen)
-            {
-                port.Close();
-            }
+            //if(port.IsOpen)
+            //{
+            //    port.Close();
+            //}
+            //cts.Cancel();
+
+            //var port = yy.PortItems.SingleOrDefault(x => x.DeviceType == DeviceType.Photoelectric
+            //     && x.DetectionType == DetectionType.Light);
+
+            //var port = SerialPortHelp.GetDevicePort(DeviceType.Photoelectric, DetectionType.Light);
+
+            //if (port.IsOpen)
+            //{
+            //    port.Close();
+            //}
+            SerialPortHelp.ClosePort(DeviceType.Photoelectric, DetectionType.Light);
+
             cts.Cancel();
         }
 
@@ -47,22 +77,38 @@ namespace SimpleDemo.UI.ViewModels
 
         public void PhotoelectricInit()
         {
-            IUnityContainer mycontainer = new UnityContainer();
+            
 
-            UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
-            section.Configure(mycontainer);
+            cts = new CancellationTokenSource();
+            var ct = cts.Token;
 
-            ILightFlowBase yy = mycontainer.Resolve<ILightFlowBase>();
-
-            //var yy = new YYLight();
+            
             yy.PhotoelectricOpen();
 
-            Task task = new TaskFactory().StartNew(() =>
+            Task task = new TaskFactory(ct).StartNew(() =>
             {
-                while (true)
+                try
                 {
-                    InPhotoelectric = yy.InPhotoelectric == true ? 2 : 0;
+                    while (true)
+                    {
+                        InPhotoelectric = yy.InPhotoelectric == true ? 2 : 0;
+
+                        //InPhotoelectric = yy.GetInPhot() == true ? 1 : 0;
+                        //Console.WriteLine("task-ok");
+                        TaskOnline = 1;
+                        ct.ThrowIfCancellationRequested();
+                    }
                 }
+                catch (OperationCanceledException)
+                {
+                    TaskOnline = 3;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             });
 
             

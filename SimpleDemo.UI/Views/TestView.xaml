@@ -31,6 +31,11 @@
         </RichTextBox>
         <Button x:Name="button_Copy" Command="{Binding CloseCommand}" Content="Button" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
         <Button  Command="{Binding TestSettingCommand}" Content="Button" HorizontalAlignment="Left" Margin="225,21,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+        <dxga:StateIndicatorControl HorizontalAlignment="Left"   StateIndex="{Binding TaskOnline,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  Margin="314,10,0,0" VerticalAlignment="Top" Height="85" Width="97">
+            <dxga:StateIndicatorControl.Model>
+                <dxga:LampStateIndicatorModel/>
+            </dxga:StateIndicatorControl.Model>
+        </dxga:StateIndicatorControl>
 
 
     </Grid>

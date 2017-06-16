@@ -20,6 +20,9 @@ namespace SimpleDemo.UI.ViewModels
         public SettingPortViewModel()
         {
             //LightSettingItem = GlobalConfig.GetInstance().GetLightSetting();
+            Items.Add(new PortElement() { ProtocolType = "1213" });
+            Items.Add(new PortElement() { ProtocolType = "aa" });
+            Items.Add(new PortElement() { ProtocolType = "ss" });
         }
 
        

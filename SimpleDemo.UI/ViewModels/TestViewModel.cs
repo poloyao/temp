@@ -29,6 +29,14 @@ namespace SimpleDemo.UI.ViewModels
         public virtual int TaskOnline { get; set; }
         
         public virtual string Data { get; set; }
+
+        public virtual int TempData { get; set; }
+
+
+        public virtual int InPhotoelectric2 { get; set; }
+        public virtual int TaskOnline2 { get; set; }
+        public virtual int TempData2 { get; set; }
+
         //SerialPort port = new SerialPort();
 
         ILightFlowBase yy;
@@ -77,41 +85,53 @@ namespace SimpleDemo.UI.ViewModels
 
         public void PhotoelectricInit()
         {
-            
+
 
             cts = new CancellationTokenSource();
             var ct = cts.Token;
 
-            
-            yy.PhotoelectricOpen();
+
+           
 
             Task task = new TaskFactory(ct).StartNew(() =>
             {
-                try
+                yy.PhotoelectricOpen();
+                while (true)
                 {
-                    while (true)
+                    if (ct.IsCancellationRequested)
                     {
-                        InPhotoelectric = yy.InPhotoelectric == true ? 2 : 0;
-
-                        //InPhotoelectric = yy.GetInPhot() == true ? 1 : 0;
-                        //Console.WriteLine("task-ok");
-                        TaskOnline = 1;
-                        ct.ThrowIfCancellationRequested();
+                        break;
                     }
-                }
-                catch (OperationCanceledException)
-                {
-                    TaskOnline = 3;
-                }
-                catch (Exception)
-                {
 
-                    throw;
+                    InPhotoelectric = yy.InPhotoelectric == true ? 2 : 0;
+
+                    //InPhotoelectric = yy.GetInPhot() == true ? 1 : 0;
+                    //Console.WriteLine("task-ok");
+                    TaskOnline = 1;
+
+                    if (yy.AllowGetData)
+                    {
+                        TempData = yy.GetLightData();
+                    }
+
+                   // ct.ThrowIfCancellationRequested();
                 }
-                
+
             });
 
-            
+            Task task2 = new TaskFactory(ct).StartNew(() =>
+            {
+                while(true)
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    TaskOnline2 = 1;
+                    TempData2++;
+                    System.Threading.Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(0, 500));
+                }
+            });
 
 
         }

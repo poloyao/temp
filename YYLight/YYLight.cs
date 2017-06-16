@@ -17,6 +17,9 @@ namespace YYLight
         public bool InLight { get; set; }
         public List<PortElement> PortItems { get; set; }
 
+        public bool AllowGetData { get; private set; }
+
+        int TempInt;
 
         public YYLight()
         {
@@ -36,9 +39,9 @@ namespace YYLight
             throw new NotImplementedException();
         }
 
-        public void GetLightData()
+        public int GetLightData()
         {
-            throw new NotImplementedException();
+            return TempInt;
         }
 
         public void LightClose()
@@ -91,6 +94,16 @@ namespace YYLight
                         result = bytesData[i + 1];
                         InPhotoelectric = result > 0x00 ? true : false;
                         i += 2;
+                        if (InPhotoelectric)
+                        {
+                            AllowGetData = true;
+                            TempInt++;
+                        }
+                        else
+                        {
+                            AllowGetData = false;
+                            TempInt = 0;
+                        }
                     }
 
                 }
@@ -112,6 +125,11 @@ namespace YYLight
         }
 
         public void DetectionStart()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetData()
         {
             throw new NotImplementedException();
         }

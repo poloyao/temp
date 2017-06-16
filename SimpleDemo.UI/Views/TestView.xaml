@@ -7,7 +7,7 @@
              xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges" x:Class="SimpleDemo.UI.Views.TestView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:TestViewModel}}"
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="600">
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:DispatcherService/>
     </dxmvvm:Interaction.Behaviors>
@@ -16,26 +16,38 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="button" Command="{Binding PhotoelectricInitCommand}" Content="Button" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+        <Button x:Name="button" Command="{Binding PhotoelectricInitCommand}" Content="启动" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
         <dxga:StateIndicatorControl  StateIndex="{Binding InPhotoelectric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="121,10,0,0" VerticalAlignment="Top" Height="85" Width="97">
             <dxga:StateIndicatorControl.Model>
                 <dxga:LampStateIndicatorModel/>
             </dxga:StateIndicatorControl.Model>
-        </dxga:StateIndicatorControl>
-        <RichTextBox x:Name="richTextBox" Grid.Row="1">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="{Binding Data}"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <Button x:Name="button_Copy" Command="{Binding CloseCommand}" Content="Button" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
-        <Button  Command="{Binding TestSettingCommand}" Content="Button" HorizontalAlignment="Left" Margin="225,21,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+        </dxga:StateIndicatorControl>       
+        <Button x:Name="button_Copy" Command="{Binding CloseCommand}" Content="停止" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+        <Button  Command="{Binding TestSettingCommand}" Content="测试" HorizontalAlignment="Left" Margin="225,21,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
         <dxga:StateIndicatorControl HorizontalAlignment="Left"   StateIndex="{Binding TaskOnline,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  Margin="314,10,0,0" VerticalAlignment="Top" Height="85" Width="97">
             <dxga:StateIndicatorControl.Model>
                 <dxga:LampStateIndicatorModel/>
             </dxga:StateIndicatorControl.Model>
         </dxga:StateIndicatorControl>
+        <dxga:DigitalGaugeControl Text="{Binding TempData}" HorizontalAlignment="Left" Margin="416,8,0,0" VerticalAlignment="Top" Height="74" Width="162"/>
+
+
+        <Grid Grid.Row="1">
+            <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="20,27,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="button1_Copy" Content="Button" HorizontalAlignment="Left" Margin="20,66,0,0" VerticalAlignment="Top" Width="75"/>
+            <dxga:StateIndicatorControl  StateIndex="{Binding InPhotoelectric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="121,10,0,0" VerticalAlignment="Top" Height="85" Width="97">
+                <dxga:StateIndicatorControl.Model>
+                    <dxga:LampStateIndicatorModel/>
+                </dxga:StateIndicatorControl.Model>
+            </dxga:StateIndicatorControl>
+            <dxga:StateIndicatorControl HorizontalAlignment="Left"   StateIndex="{Binding TaskOnline2,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  Margin="314,10,0,0" VerticalAlignment="Top" Height="85" Width="97">
+                <dxga:StateIndicatorControl.Model>
+                    <dxga:LampStateIndicatorModel/>
+                </dxga:StateIndicatorControl.Model>
+            </dxga:StateIndicatorControl>
+            <dxga:DigitalGaugeControl Text="{Binding TempData2}" HorizontalAlignment="Left" Margin="416,8,0,0" VerticalAlignment="Top" Height="74" Width="162"/>
+
+        </Grid>
 
 
     </Grid>

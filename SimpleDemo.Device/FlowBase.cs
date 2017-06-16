@@ -38,11 +38,14 @@ namespace SimpleDemo.Device
         /// </summary>
         List<PortElement> PortItems { get; set; }
 
+        bool AllowGetData { get; }
+
 
         #endregion
 
 
         #region 方法函数
+        
         /// <summary>
         /// 传入车籍信息
         /// </summary>
@@ -76,7 +79,7 @@ namespace SimpleDemo.Device
         /// 获取大灯数据。
         /// ！！！！待商议
         /// </summary>
-        void GetLightData();
+        int GetLightData();
 
         /// <summary>
         /// 设备复位

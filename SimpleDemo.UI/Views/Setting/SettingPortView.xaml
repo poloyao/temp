@@ -38,17 +38,17 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <dxlc:DataLayoutControl Grid.Row="0" CurrentItem="{Binding Items}" AutoGenerateItems="True">
-            <!--<dxlc:DataLayoutItem Binding="{Binding PortName}" />
+        <!--<dxlc:DataLayoutControl Grid.Row="0" CurrentItem="{Binding Items}" AutoGenerateItems="True">
+            <dxlc:DataLayoutItem Binding="{Binding PortName}" />
             <dxlc:DataLayoutItem Binding="{Binding BaudRate}" />
             <dxlc:DataLayoutItem Binding="{Binding DataBits}" />
             <dxlc:DataLayoutItem Binding="{Binding Parity}" />
-            <dxlc:DataLayoutItem Binding="{Binding ProtocolType}" />-->
-            <!--<dxlc:DataLayoutItem Binding="{Binding LatticeScreen}"/>
-            <dxlc:DataLayoutItem Binding="{Binding LightDevice}"/>-->
-        </dxlc:DataLayoutControl>
+            <dxlc:DataLayoutItem Binding="{Binding ProtocolType}" />
+            <dxlc:DataLayoutItem Binding="{Binding LatticeScreen}"/>
+            <dxlc:DataLayoutItem Binding="{Binding LightDevice}"/>
+        </dxlc:DataLayoutControl>-->
 
-        <!--<dxprg:PropertyGridControl SelectedObject="{Binding LightSettingItem}" 
+        <dxprg:PropertyGridControl SelectedObject="{Binding Items}" 
                                    ShowCategories="True"
                                     ExpandCategoriesWhenSelectedObjectChanged="True"
                                     ShowMenuButtonInRows="False">
@@ -57,7 +57,7 @@
             <dxprg:PropertyDefinition Path="Photoelectric"  ShowChildren="False" ContentTemplate="{DynamicResource PropertyDetailTemplate}" />
             <dxprg:PropertyDefinition Path="*" />
 
-        </dxprg:PropertyGridControl>-->
+        </dxprg:PropertyGridControl>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button>取消</Button>
